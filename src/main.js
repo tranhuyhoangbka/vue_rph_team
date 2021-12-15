@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueResource from 'vue-resource'
 import Contact from './components/Contact.vue'
 import App from './App.vue'
 import GameApp from './GameApp.vue'
@@ -11,6 +12,9 @@ export const eventBus = new Vue({
 })
 
 Vue.config.productionTip = false
+
+Vue.use(VueResource);
+Vue.http.options.root = 'https://***/data.json';
 
 Vue.component('contact-component', Contact);
 

@@ -1,6 +1,23 @@
 <template>
   <div id="app" class="container-md">
     <Header />
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="text" class="form-control" v-model="user.username">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" v-model="user.email">
+        </div>
+        <button class="btn-block btn-success" type="submit" @click="submit">Submit</button>
+        <hr>
+        <br>
+        <button class="btn btn-block btn-warning" @click="getAllUsers">Get all data</button>
+        <ul>
+          <li v-for="(u, index) in users" :key="`user_${index}`">{{u.username}} - {{u.email}}</li>
+        </ul>
+      </div>
+    </div>
     <ItemsLayout :items="items" />
     <div class="row">
       <div class="col-md-12">
@@ -53,7 +70,36 @@ export default {
         'This is a dog',
         'My house is big'
       ],
-      maxItems: 10
+      maxItems: 10,
+      user: {
+        username: '',
+        email: ''
+      },
+      users: []
+    }
+  },
+  methods: {
+    submit() {
+      // console.log(this.user)
+      this.$http.post('', this.user)
+        .then(response => {
+          console.log(response)
+        }, error => {
+          console.log(error)
+        })
+    },
+    getAllUsers() {
+      this.$http.get('')
+        .then(response => {
+          const data = response.body;
+          const newArr = [];
+          for(let key in data) {
+            newArr.push(data[key]);
+          }
+          this.users = newArr;
+        }, error => {
+          console.log(error)
+        })
     }
   },
   components: {
