@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <contact-component></contact-component>
     <h1>{{ msg }}</h1>
     <p>{{sayHello()}}</p>
     <p v-once>{{title}} - {{showPost()}}</p>
@@ -7,7 +8,7 @@
     <p v-html="testHtml"></p>
     <p>click to show count</p>
     <p v-on:mouseover="stopChuot">Dung dem toa do</p>
-    <button v-on:click="increaseCount">click me</button>
+    <button ref="infoBtn" v-on:click="increaseCount">click me</button>
     <button v-on:click="count++">click me javascript</button>
     <p>count: {{count}}</p>
     <p>count: {{count > 20 ? 'vuot gioi han' : 'hop le'}}</p>
@@ -30,7 +31,7 @@
     <div class="square" :style="{backgroundColor: color}"></div>
     <input type="text" v-model="color">
     <input type="text" v-model="width">
-    <p>Are you a docter?</p>
+    <p ref="qText">Are you a docter?</p>
     <button @click="isSpecify = !isSpecify">Change</button>
     <p v-if="isSpecify">Yes, a docter</p>
     <p v-else>No, im not</p>
@@ -57,6 +58,8 @@
     <div v-for="(student, index) in students" :key="`list2_${index}`">
       <div v-for="(info, key, i) in student" :key="`list2_${index}_${key}`">key: {{key}} / info: {{info}} / index: {{i}}</div>
     </div>
+    <br>
+    <button @click="destroyCurrent">Destroy component</button>
   </div>
 </template>
 
@@ -101,6 +104,8 @@ export default {
     },
     increaseCount: function(){
       this.count++;
+      this.$refs.infoBtn.innerText = "increasing...";
+      console.log(this);
     },
     calculateCordiate: function(event){
       this.x = event.clientX;
@@ -114,6 +119,9 @@ export default {
     },
     changeLink: function(){
       this.linkVal = 'https://hcm.com'
+    },
+    destroyCurrent: function() {
+      this.$destroy()
     }
 
   },
@@ -145,6 +153,30 @@ export default {
     count: function(newValue){
       console.log('count changed! ' + newValue)
     }
+  },
+  beforeCreate: function() {
+    console.log('beforeCreated');
+  },
+  created: function() {
+    console.log('created');
+  },
+  beforeMount: function() {
+    console.log('beforeMount');
+  },
+  mounted: function() {
+    console.log('mounted');
+  },
+  beforeUpdate: function() {
+    console.log('beforeUpdate');
+  },
+  updated: function() {
+    console.log('updated');
+  },
+  beforeDestroy: function() {
+    console.log('beforeDestroy');
+  },
+  destroyed: function() {
+    console.log('destroyed');
   }
 }
 </script>
